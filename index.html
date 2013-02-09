@@ -2,11 +2,23 @@
 <head>
     <title>MouseFloat v0.1</title>
 
-    <link rel="stylesheet" type="text/css" href="vendors/ext-4.1.1a/resources/css/ext-all.css">
-    <link href="http://vjs.zencdn.net/c/video-js.css" rel="stylesheet">
+    <link href="http://vjs.zencdn.net/c/video-js.css" rel="stylesheet" />
+    <link href="resources/css/wizard.css" rel="stylesheet" />
     <script src="http://vjs.zencdn.net/c/video.js"></script>
-    <script type="text/javascript" src="vendors/ext-4.1.1a/ext-debug.js"></script>
+    <script type="text/javascript" src="vendors/jquery/jquery-1.9.0.js"></script>
+    
+    <script type="text/javascript" src="app/MouseFloat/model/FloatLog.js"></script>
     <script type="text/javascript" src="app.js"></script>
 </head>
-<body></body>
+<body>
+    <div id="video-hijack"></div>
+    
+    <video id="fst-video" class="video-js vjs-default-skin" controls preload="auto" width="640" height="264" poster="http://video-js.zencoder.com/oceans-clip.png">
+    <source src="http://video-js.zencoder.com/oceans-clip.mp4" type='video/mp4' />
+    <source src="http://video-js.zencoder.com/oceans-clip.webm" type='video/webm' />
+    <source src="http://video-js.zencoder.com/oceans-clip.ogv" type='video/ogg' />
+   </video>
+    
+    <div id="test-details"></div>
+</body>
 </html>
