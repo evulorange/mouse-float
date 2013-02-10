@@ -12,20 +12,37 @@ MF.model.FloatLog = function(id, duration) {
         return this.state;
     };
     
-    this.sumFloat = function(index) {
-        var sum = 0.0;
+    this.sumFloat = function(inex) {
+        var ret = {
+            '0002': 0,
+            '0204': 0,
+            '0406': 0,
+            '0006': 0
+        };
+        var sum = 0;
+        var marker = 0;
         var floating = true;
+        
         for (var i = 0; i < this.toggles.length; i++) {
-            if ((i % 2) * floating) {
+            marker = this.toggles[i].location;
+            if (floating) {
+                var add;
                 if (i == this.toggles.length - 1) {
-                    sum += _V_('fst-video').currentTime() - this.toggles[i].location;
+//                    sum += _V_('fst-video').currentTime() - marker;
                 } else {
-                    sum += this.toggles[i + 1].location - this.toggles[i].location;
+                    add += this.toggles[i + 1].location - marker;
+                }
+                
+                if (add) {
+                    var index = Math.floor(marker / 6000 / (1/MOUSE_PER_VIDEO));
+                    var map = ['0002', '0204', '0406', '0006'];
+                    ret[map[index]] += add
                 }
             }
+            floating = !floating;
         }
         
-        return sum;
+        return ret;
     };
     
     this.init = function(id, duration) {
@@ -38,16 +55,20 @@ MF.model.FloatLog = function(id, duration) {
         this.toggles.push({
             location: location
         });
+        console.log(location);
         
         this.state = this.state == 'Floating' ? 'Swimming' : 'Floating';
-        this.updateView();
     };
     
-    this.updateView = function() {
-        var summary = $('#floatlog-' + this.id);
+    this.updateView = function(summary) {
         $('.heading', summary).text(this.getStatus());
         
-        $('#f'+this.id+'_ival00-02', summary).text(this.sumFloat(0));
+        var duration = this.sumFloat(0)['0002'];
+        var ms = duration % 1000;
+        var s = Math.floor(duration / 1000);
+        $('#f'+this.id+'_ival00-02', summary).text(
+            s + 's ' + ms + 'ms'
+        );
     };
     
     this.init(id, duration);
