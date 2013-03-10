@@ -21,20 +21,20 @@ MF.model.FloatLog = function(id, duration) {
         };
         var sum = 0;
         var marker = 0;
-        var floating = true;
+        var floating = false;
         
         for (var i = 0; i < this.toggles.length; i++) {
             marker = this.toggles[i].location;
             if (floating) {
-                var add;
+                var add = 0;
                 if (i == this.toggles.length - 1) {
-//                    sum += _V_('fst-video').currentTime() - marker;
+                    add += _V_('fst-video').currentTime() - marker;
                 } else {
                     add += this.toggles[i + 1].location - marker;
                 }
                 
                 if (add) {
-                    var index = Math.floor(marker / 6000 / (1/MOUSE_PER_VIDEO));
+                    var index = Math.floor(marker / 360000 / (1/MOUSE_PER_VIDEO));
                     var map = ['0002', '0204', '0406', '0006'];
                     ret[map[index]] += add
                 }
@@ -73,3 +73,5 @@ MF.model.FloatLog = function(id, duration) {
     
     this.init(id, duration);
 };
+
+//MF.model.FloatLog.INITIAL_STATE = 'Floating';
